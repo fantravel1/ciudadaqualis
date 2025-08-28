@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Aqualis y los Ascendentes - Historia Completa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #e94560;
+            --text-light: #f5f5f5;
+            --text-dark: #333;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .story-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .download-button {
+            background: var(--accent-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        /* Table of Contents Styling */
+        .table-of-contents {
+            background: rgba(22, 33, 62, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px auto;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .table-of-contents h3 {
+            color: #e94560;
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .table-of-contents ol {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .table-of-contents li {
+            margin-bottom: 15px;
+        }
+
+        .table-of-contents a {
+            display: block;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            color: #f5f5f5;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(233, 69, 96, 0.2);
+        }
+
+        .table-of-contents a:hover {
+            background: rgba(233, 69, 96, 0.2);
+            transform: translateX(10px);
+            border-color: #e94560;
+        }
+
+        /* Story Content */
+        .story-container {
+            max-width: 800px;
+            margin: 80px auto 40px;
+            padding: 0 20px;
+        }
+
+        .story-title {
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .story-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        .story-cover {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 40px;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .chapter {
+            margin-bottom: 60px;
+            background: rgba(22, 33, 62, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .chapter-title {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .chapter-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+
+        .dialogue {
+            font-style: italic;
+            color: #a8d8ea;
+            padding-left: 20px;
+            border-left: 3px solid var(--accent-color);
+            margin: 20px 0;
+        }
+
+        .scene-break {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin: 40px 0;
+            opacity: 0.5;
+        }
+
+        /* Reading Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--accent-color);
+            transition: width 0.3s;
+            z-index: 101;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .story-header {
+                padding: 10px 15px;
+            }
+            
+            .story-title {
+                font-size: 2rem;
+            }
+            
+            .chapter {
+                padding: 20px;
+            }
+            
+            .chapter-title {
+                font-size: 1.5rem;
+            }
+            
+            .chapter-content p {
+                font-size: 1rem;
+            }
+            
+            .back-button span {
+                display: none;
+            }
+        }
+
+        /* Dark/Light mode toggle (optional) */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-size: 1.5rem;
+        }
+
+        /* Light theme */
+        body.light-theme {
+            background-color: #f5f5f5;
+            color: var(--text-dark);
+        }
+
+        body.light-theme .chapter {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        body.light-theme .story-header {
+            background: rgba(245, 245, 245, 0.95);
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Header -->
+    <header class="story-header">
+        <a href="index.html#story" class="back-button">
+            ← <span>Volver</span>
+        </a>
+        <a href="AQUALIS_y_los_Ascendentes.pdf" download class="download-button">
+            ⬇️ PDF
+        </a>
+    </header>
+
+    <!-- Story Content -->
+    <main class="story-container">
+        <h1 class="story-title">Aqualis y los Ascendentes</h1>
+        <p class="story-subtitle">El Cielo Reclama lo que es Suyo</p>
+        
+        <img src="img/ChatGPT Image 7 ago 2025, 10_53_12 a.m..png" alt="Portada de Aqualis y los Ascendentes" class="story-cover">
+
+        <!-- Table of Contents -->
+        <nav class="table-of-contents">
+            <h3>Índice</h3>
+            <ol>
+                <li><a href="#chapter1">Capítulo 1: Los Skybreakers</a></li>
+                <li><a href="#chapter2">Capítulo 2: El Ascenso</a></li>
+                <li><a href="#chapter3">Capítulo 3: La Ciudad Imposible</a></li>
+                <li><a href="#chapter4">Capítulo 4: El Control Mental</a></li>
+                <li><a href="#chapter5">Capítulo 5: La Batalla de Amigos</a></li>
+                <li><a href="#chapter6">Capítulo 6: El Precio del Olvido</a></li>
+                <li><a href="#chapter7">Capítulo 7: La Búsqueda en la Tierra</a></li>
+                <li><a href="#chapter8">Capítulo 8: Los Secretos de Ezequiel</a></li>
+                <li><a href="#chapter9">Capítulo 9: El Regreso a Aqualis</a></li>
+                <li><a href="#chapter10">Capítulo 10: La Batalla Final</a></li>
+                <li><a href="#chapter11">Capítulo 11: El Sacrificio</a></li>
+                <li><a href="#chapter12">Capítulo 12: El Nuevo Amanecer</a></li>
+                <li><a href="#epilogue">Epílogo: El Legado de los Skybreakers</a></li>
+            </ol>
+        </nav>
+
+        <!-- Chapter 1 -->
+        <div class="chapter" id="chapter1">
+            <h2 class="chapter-title">Capítulo 1: Los Skybreakers</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 1 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 2 -->
+        <div class="chapter" id="chapter2">
+            <h2 class="chapter-title">Capítulo 2: El Ascenso</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 2 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 3 -->
+        <div class="chapter" id="chapter3">
+            <h2 class="chapter-title">Capítulo 3: La Ciudad Imposible</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 3 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 4 -->
+        <div class="chapter" id="chapter4">
+            <h2 class="chapter-title">Capítulo 4: El Control Mental</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 4 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 5 -->
+        <div class="chapter" id="chapter5">
+            <h2 class="chapter-title">Capítulo 5: La Batalla de Amigos</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 5 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 6 -->
+        <div class="chapter" id="chapter6">
+            <h2 class="chapter-title">Capítulo 6: El Precio del Olvido</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 6 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 7 -->
+        <div class="chapter" id="chapter7">
+            <h2 class="chapter-title">Capítulo 7: La Búsqueda en la Tierra</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 7 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 8 -->
+        <div class="chapter" id="chapter8">
+            <h2 class="chapter-title">Capítulo 8: Los Secretos de Ezequiel</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 8 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 9 -->
+        <div class="chapter" id="chapter9">
+            <h2 class="chapter-title">Capítulo 9: El Regreso a Aqualis</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 9 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 10 -->
+        <div class="chapter" id="chapter10">
+            <h2 class="chapter-title">Capítulo 10: La Batalla Final</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 10 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 11 -->
+        <div class="chapter" id="chapter11">
+            <h2 class="chapter-title">Capítulo 11: El Sacrificio</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 11 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 12 -->
+        <div class="chapter" id="chapter12">
+            <h2 class="chapter-title">Capítulo 12: El Nuevo Amanecer</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 12 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Epilogue -->
+        <div class="chapter" id="epilogue">
+            <h2 class="chapter-title">Epílogo: El Legado de los Skybreakers</h2>
+            <div class="chapter-content">
+                <!-- PASTE EPILOGUE TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <!-- Chapter 1 -->
+        <div class="chapter">
+            <h2 class="chapter-title">Capítulo 1: Los Skybreakers</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 1 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 2 -->
+        <div class="chapter">
+            <h2 class="chapter-title">Capítulo 2: El Ascenso</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 2 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 3 -->
+        <div class="chapter">
+            <h2 class="chapter-title">Capítulo 3: La Ciudad Imposible</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 3 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 4 -->
+        <div class="chapter">
+            <h2 class="chapter-title">Capítulo 4: El Control Mental</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 4 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 5 -->
+        <div class="chapter">
+            <h2 class="chapter-title">Capítulo 5: La Batalla de Amigos</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 5 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 6 -->
+        <div class="chapter">
+            <h2 class="chapter-title">Capítulo 6: El Precio del Olvido</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 6 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 7 -->
+        <div class="chapter">
+            <h2 class="chapter-title">Capítulo 7: La Búsqueda en la Tierra</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 7 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 8 -->
+        <div class="chapter">
+            <h2 class="chapter-title">Capítulo 8: Los Secretos de Ezequiel</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 8 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 9 -->
+        <div class="chapter">
+            <h2 class="chapter-title">Capítulo 9: El Regreso a Aqualis</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 9 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 10 -->
+        <div class="chapter">
+            <h2 class="chapter-title">Capítulo 10: La Batalla Final</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 10 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 11 -->
+        <div class="chapter">
+            <h2 class="chapter-title">Capítulo 11: El Sacrificio</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 11 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Chapter 12 -->
+        <div class="chapter">
+            <h2 class="chapter-title">Capítulo 12: El Nuevo Amanecer</h2>
+            <div class="chapter-content">
+                <!-- PASTE CHAPTER 12 TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div class="scene-break">✦ ✦ ✦</div>
+
+        <!-- Epilogue -->
+        <div class="chapter">
+            <h2 class="chapter-title">Epílogo: El Legado de los Skybreakers</h2>
+            <div class="chapter-content">
+                <!-- PASTE EPILOGUE TEXT HERE -->
+                <p>
+                    
+                </p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 60px 0;">
+            <img src="img/emily-signature.png" alt="Emily - Autora" style="max-height: 80px;">
+        </div>
+    </main>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <span id="themeIcon">🌙</span>
+    </div>
+
+    <script>
+        // Reading Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Theme Toggle
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            
+            body.classList.toggle('light-theme');
+            icon.textContent = body.classList.contains('light-theme') ? '🌙' : '☀️';
+            
+            // Save preference
+            localStorage.setItem('theme', body.classList.contains('light-theme') ? 'light' : 'dark');
+        }
+
+        // Load saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                document.getElementById('themeIcon').textContent = '🌙';
+            }
+        });
+    </script>
+</body>
+</html>
