@@ -1,4 +1,3 @@
-
 # Robots.txt for www.ciudadaqualis.com
 User-agent: *
 Allow: /
