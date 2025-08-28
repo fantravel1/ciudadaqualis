@@ -492,6 +492,40 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
         }
+
+        /* Mobile Story Link */
+        .mobile-story-link {
+            display: none;
+            background: var(--accent-color);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px auto;
+            max-width: 300px;
+            transition: var(--transition);
+        }
+        
+        .mobile-story-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .pdf-container {
+                display: none;
+            }
+            
+            .mobile-story-link {
+                display: block;
+            }
+            
+            .download-pdf {
+                margin-top: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -596,6 +630,11 @@
                             loading="lazy">
                         </iframe>
                     </div>
+                    
+                    <!-- Mobile Reading Option -->
+                    <a href="story.html" class="mobile-story-link">
+                        📖 Leer Historia (Versión Móvil)
+                    </a>
                     
                     <!-- Download Link -->
                     <a href="AQUALIS_y_los_Ascendentes.pdf" 
