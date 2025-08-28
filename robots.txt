@@ -1,0 +1,16 @@
+
+# Robots.txt for www.ciudadaqualis.com
+User-agent: *
+Allow: /
+Sitemap: https://www.ciudadaqualis.com/sitemap.xml
+
+# Allow crawling of CSS and JS files
+Allow: /*.css
+Allow: /*.js
+
+# Allow image crawling
+Allow: /img/
+
+# Disallow temporary or private directories (if any)
+# Disallow: /temp/
+# Disallow: /private/
